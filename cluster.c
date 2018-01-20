@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){ // cluster <number of cln nodes>
 	char alias_list[200][32];
 	read_alias(alias_list);
 	for(i = 0; i < n_nodes; i++ ){ //i is same as short_id 
-		sleep(1);
+		sleep(1); // Or else c-lightning crashes
 		/* Create folder for node */
 		sprintf(terminal_folder, "mkdir %s%d", node_path, i);
 		system(terminal_folder); 
@@ -89,7 +89,8 @@ int main(int argc, char *argv[]){ // cluster <number of cln nodes>
 		sprintf(terminal_lightningd, "%s %s %d%s", terminal_lightningd, ">", i, ".log &");
 		system(terminal_lightningd);
 		printf("\n%s", terminal_lightningd);
-		printf("\n"); //WHAT THE HECK WHAT THE HECK WHO THE HECK ARE YOU OH MY GOODNESS. REMOVE THIS AND CRASH? WHAT HECK
+		printf("\n"); 
+		//FIXME : system() doesn't get executed in order in order
 	}
 	//TODO:warn for no bitcoin-qt found
 	
